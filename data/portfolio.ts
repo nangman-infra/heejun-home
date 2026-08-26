@@ -1,3 +1,22 @@
+export type ProjectDetailKey =
+  | "overview"
+  | "problem"
+  | "role"
+  | "implementation"
+  | "problemSolving"
+  | "result"
+  | "learned";
+
+export interface Project {
+  slug: string;
+  name: string;
+  description: string;
+  technologies: string[];
+  focus: string;
+  github: string;
+  details: Record<ProjectDetailKey, string>;
+}
+
 export const portfolioData = {
   profile: {
     name: "전희준",
@@ -72,7 +91,7 @@ export const portfolioData = {
         learned: "프로젝트를 통해 배운 점을 입력해 주세요.",
       },
     },
-  ],
+  ] satisfies Project[],
   experience: [
     {
       period: "2025.06 — 2025.08",
@@ -91,20 +110,15 @@ export const portfolioData = {
     },
   ],
   contact: [
-    {
-      label: "Email",
-      value: "hello@example.com",
-      href: "mailto:hello@example.com",
-    },
-    {
-      label: "GitHub",
-      value: "github.com/username",
-      href: "https://github.com/username",
-    },
+    { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
+    { label: "GitHub", value: "github.com/username", href: "https://github.com/username" },
     {
       label: "LinkedIn",
       value: "linkedin.com/in/username",
       href: "https://linkedin.com/in/username",
     },
   ],
-};
+} as const;
+
+export const getProjectBySlug = (slug: string) =>
+  portfolioData.projects.find((project) => project.slug === slug);
