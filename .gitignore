@@ -8,6 +8,9 @@
 # production
 /build
 
+# test coverage
+/coverage/
+
 # local environment files
 .env*
 !.env.example
