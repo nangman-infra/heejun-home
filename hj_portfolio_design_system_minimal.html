@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HJ Portfolio Design System — Minimal</title>
+  <style>
+    :root {
+      --bg: #0b0d10;
+      --surface: #111418;
+      --surface-2: #161a20;
+      --border: #252a31;
+
+      --text: #f5f7fa;
+      --text-soft: #c6ccd4;
+      --muted: #7f8894;
+
+      --accent: #4f8cff;
+      --accent-soft: #8db2ff;
+
+      --radius: 12px;
+      --font: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: "SFMono-Regular", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    main {
+      padding: 72px 0 96px;
+    }
+
+    .hero {
+      max-width: 780px;
+      padding: 48px 0 24px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: 28px;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 18px;
+      letter-spacing: -.015em;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--text-soft);
+      font-size: 18px;
+      max-width: 660px;
+    }
+
+    .section {
+      padding-top: 64px;
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .token {
+      min-height: 130px;
+    }
+
+    .swatch {
+      height: 54px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 14px;
+    }
+
+    .token-name {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .token-value {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      margin-top: 4px;
+    }
+
+    .type-box > div + div {
+      margin-top: 28px;
+    }
+
+    .display {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+    }
+
+    .heading {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -.03em;
+    }
+
+    .body-text {
+      font-size: 16px;
+      color: var(--text-soft);
+      max-width: 720px;
+    }
+
+    .caption {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      height: 42px;
+      padding: 0 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-text {
+      background: transparent;
+      color: var(--accent-soft);
+      padding-inline: 4px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .skill-card p,
+    .project-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .skill-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .skill-label {
+      color: var(--accent-soft);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    .project-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .project-image {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-family: var(--mono);
+    }
+
+    .project-body {
+      padding: 20px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .project-footer {
+      margin-top: 18px;
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .project-footer a {
+      color: var(--accent-soft);
+    }
+
+    .list {
+      border-top: 1px solid var(--border);
+    }
+
+    .list-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .list-row .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .list-row strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .list-row p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .contact-row a:hover {
+      color: var(--accent-soft);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 72px;
+      padding: 24px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 860px) {
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav-links {
+        gap: 14px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, 1080px);
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .list-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      main {
+        padding-top: 40px;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .section {
+        margin-top: 48px;
+        padding-top: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">HJ<span>.</span></div>
+      <nav class="nav-links">
+        <a href="#foundation">Foundation</a>
+        <a href="#components">Components</a>
+        <a href="#projects">Projects</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">Portfolio Design System</div>
+      <h1>단순하고 오래 봐도 질리지 않는 개발자 포트폴리오</h1>
+      <p>
+        장식보다 정보 전달을 우선합니다. 어두운 배경, 명확한 타이포그래피,
+        한 가지 블루 포인트 컬러만 사용해 차분하고 정돈된 인상을 만듭니다.
+      </p>
+    </section>
+
+    <section class="section" id="foundation">
+      <div class="section-head">
+        <h2>Colors</h2>
+        <p>기본색은 흑백에 가깝게 두고, 강조가 필요한 곳에만 블루를 사용합니다.</p>
+      </div>
+
+      <div class="grid grid-4">
+        <div class="card token">
+          <div class="swatch" style="background:#0b0d10"></div>
+          <div class="token-name">Background</div>
+          <div class="token-value">#0B0D10</div>
+        </div>
+        <div class="card token">
+          <div class="swatch" style="background:#111418"></div>
+          <div class="token-name">Surface</div>
+          <div class="token-value">#111418</div>
+        </div>
+        <div class="card token">
+          <div class="swatch" style="background:#f5f7fa"></div>
+          <div class="token-name">Text</div>
+          <div class="token-value">#F5F7FA</div>
+        </div>
+        <div class="card token">
+          <div class="swatch" style="background:#4f8cff"></div>
+          <div class="token-name">Accent</div>
+          <div class="token-value">#4F8CFF</div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:52px;">
+        <h2>Typography</h2>
+        <p>크고 굵은 제목과 차분한 본문 조합으로 계층을 명확하게 잡습니다.</p>
+      </div>
+
+      <div class="card type-box">
+        <div>
+          <div class="caption">Display</div>
+          <div class="display">전희준입니다.</div>
+        </div>
+        <div>
+          <div class="caption">Heading</div>
+          <div class="heading">Backend & Cloud Developer</div>
+        </div>
+        <div>
+          <div class="caption">Body</div>
+          <div class="body-text">
+            안정적인 시스템을 설계하고 문제를 해결하는 과정에 관심이 있습니다.
+            프로젝트의 결과뿐 아니라 어떤 문제를 어떻게 해결했는지를 중심으로 보여줍니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="components">
+      <div class="section-head">
+        <h2>Components</h2>
+        <p>버튼과 태그도 눈에 띄기보다 전체 레이아웃에 자연스럽게 섞이도록 구성합니다.</p>
+      </div>
+
+      <div class="card">
+        <div class="caption">Buttons</div>
+        <div class="stack">
+          <button class="btn btn-primary">View Projects</button>
+          <button class="btn btn-secondary">GitHub</button>
+          <button class="btn btn-text">More →</button>
+        </div>
+
+        <div class="caption" style="margin-top:28px;">Tags</div>
+        <div class="stack">
+          <span class="tag">Java</span>
+          <span class="tag">Spring Boot</span>
+          <span class="tag">AWS</span>
+          <span class="tag">Docker</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:16px;">
+        <div class="card skill-card">
+          <div class="skill-title">
+            <h3>Backend</h3>
+            <span class="skill-label">01</span>
+          </div>
+          <p>Java, Spring Boot, REST API 등 서버 애플리케이션 관련 기술을 묶어서 보여줍니다.</p>
+        </div>
+
+        <div class="card skill-card">
+          <div class="skill-title">
+            <h3>Cloud & Infra</h3>
+            <span class="skill-label">02</span>
+          </div>
+          <p>AWS, Docker, Nginx와 같은 배포 및 인프라 관련 기술을 정리합니다.</p>
+        </div>
+
+        <div class="card skill-card">
+          <div class="skill-title">
+            <h3>Database</h3>
+            <span class="skill-label">03</span>
+          </div>
+          <p>MySQL, Redis 등 실제 프로젝트에서 사용한 데이터 계층 기술을 정리합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head">
+        <h2>Project Cards</h2>
+        <p>프로젝트는 이미지보다 제목, 역할, 기술, 문제 해결 내용을 중심으로 배치합니다.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="card project-card">
+          <div class="project-image">project image</div>
+          <div class="project-body">
+            <h3>지역화폐 사업자 플랫폼</h3>
+            <p>사업자 인증과 가맹점 기능을 중심으로 구성한 서비스 프로젝트입니다.</p>
+            <div class="project-meta">
+              <span class="tag">Spring Boot</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">AWS</span>
+            </div>
+            <div class="project-footer">
+              <a href="#">GitHub</a>
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project-card">
+          <div class="project-image">project image</div>
+          <div class="project-body">
+            <h3>Anti-Spoofing Model</h3>
+            <p>얼굴 이미지의 실제/위조 여부를 분류하는 컴퓨터 비전 프로젝트입니다.</p>
+            <div class="project-meta">
+              <span class="tag">Python</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">OpenCV</span>
+            </div>
+            <div class="project-footer">
+              <a href="#">GitHub</a>
+              <a href="#">Details</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project-card">
+          <div class="project-image">project image</div>
+          <div class="project-body">
+            <h3>FPGA Alarm Clock</h3>
+            <p>Verilog로 구현한 디지털 알람 시계 프로젝트입니다.</p>
+            <div class="project-meta">
+              <span class="tag">Verilog</span>
+              <span class="tag">Quartus</span>
+              <span class="tag">FPGA</span>
+            </div>
+            <div class="project-footer">
+              <a href="#">GitHub</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Experience List</h2>
+        <p>경력과 활동은 카드보다 리스트 구조가 더 차분하고 읽기 쉽습니다.</p>
+      </div>
+
+      <div class="list">
+        <div class="list-row">
+          <div class="label">2025.06 — 2025.08</div>
+          <div>
+            <strong>AI 모델 성능 개선 프로젝트</strong>
+            <p>모델 개선과 서비스 적용 과정을 경험했습니다.</p>
+          </div>
+        </div>
+
+        <div class="list-row">
+          <div class="label">2024.09 — 2024.12</div>
+          <div>
+            <strong>교내 캡스톤 프로젝트</strong>
+            <p>백엔드 및 클라우드 기반 서비스 개발에 참여했습니다.</p>
+          </div>
+        </div>
+
+        <div class="list-row">
+          <div class="label">2023 — Present</div>
+          <div>
+            <strong>Computer Engineering</strong>
+            <p>서버, 클라우드, AI 및 시스템 개발 프로젝트를 진행했습니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p>연락 수단도 카드로 쪼개지 않고 한 줄로 간결하게 제공합니다.</p>
+      </div>
+
+      <div class="contact-row">
+        <a href="#">Email</a>
+        <a href="#">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </section>
+
+    <footer>
+      HJ Portfolio Design System · Minimal Dark
+    </footer>
+  </main>
+</body>
+</html>
