@@ -374,12 +374,18 @@ pipeline {
                         }
                         sh '''
                             set -eu
+
+                            # 온프렘 에이전트는 여러 프로젝트가 공유하므로 응답 파일 경로가
+                            # 겹치지 않도록 빌드마다 고유한 임시 파일을 만들고 종료 시 지운다.
+                            response_file=$(mktemp "/tmp/${IMAGE_NAME}-health-XXXXXX")
+                            trap 'rm -f "$response_file"' EXIT
+
                             deadline=$(( $(date +%s) + DEPLOY_TIMEOUT_SECONDS ))
 
                             while [ "$(date +%s)" -lt "$deadline" ]; do
-                                if curl -fsS "$APP_HEALTH_URL" >/tmp/personal-web-health-response.txt; then
+                                if curl -fsS "$APP_HEALTH_URL" >"$response_file"; then
                                     echo "Deployment verified at $APP_HEALTH_URL"
-                                    head -c 500 /tmp/personal-web-health-response.txt || true
+                                    head -c 500 "$response_file" || true
                                     exit 0
                                 fi
 
