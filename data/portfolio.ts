@@ -46,7 +46,7 @@ export const portfolioData = {
       technologies: ["Spring Boot", "MySQL", "AWS", "Docker"],
       focus:
         "사업자 번호만 알고 있는 비사업자의 가입을 방지하기 위해 사업자 본인 인증 구조를 설계한 프로젝트",
-      github: "https://github.com/username",
+      github: "https://github.com/Komsco-Masil",
       details: {
         overview: "지역화폐 가맹점 사업자가 안전하게 가입하고 서비스를 이용할 수 있도록 인증 흐름을 설계한 프로젝트입니다.",
         problem: "사업자 번호는 외부에 노출될 수 있어 번호 확인만으로는 실제 사업자 여부를 신뢰하기 어려웠습니다.",
