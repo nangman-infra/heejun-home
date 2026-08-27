@@ -4,6 +4,7 @@ import { portfolioData } from "@/data/portfolio";
 export default function HomePage() {
   const { profile, projects, experience, contact } = portfolioData;
   const github = contact.find(({ label }) => label === "GitHub");
+  const blog = contact.find(({ label }) => label === "Blog");
 
   return (
     <main id="main-content">
@@ -22,6 +23,11 @@ export default function HomePage() {
           {github && (
             <a className="button button-secondary" href={github.href} target="_blank" rel="noreferrer">
               GitHub
+            </a>
+          )}
+          {blog && (
+            <a className="button button-secondary" href={blog.href} target="_blank" rel="noreferrer">
+              Blog
             </a>
           )}
         </div>

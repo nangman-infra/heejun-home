@@ -110,12 +110,13 @@ export const portfolioData = {
     },
   ],
   contact: [
-    { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
-    { label: "GitHub", value: "github.com/username", href: "https://github.com/username" },
+    { label: "Email", value: "heejun911@naver.com", href: "mailto:heejun911@naver.com" },
+    { label: "GitHub", value: "https://github.com/Zenjun", href: "https://github.com/Zenjun" },
+    { label: "Blog", value: "velog.io/@heejun0911", href: "https://velog.io/@heejun0911/posts" },
     {
       label: "LinkedIn",
-      value: "linkedin.com/in/username",
-      href: "https://linkedin.com/in/username",
+      value: "linkedin.com/in/희준-전-768616431",
+      href: "https://www.linkedin.com/in/%ED%9D%AC%EC%A4%80-%EC%A0%84-768616431/",
     },
   ],
 } as const;
