@@ -17,7 +17,7 @@ describe("HomePage", () => {
   it("주요 섹션 제목을 모두 렌더한다", () => {
     render(<HomePage />);
 
-    for (const title of ["Projects", "Experience", "Contact"]) {
+    for (const title of ["Projects", "Blog", "Experience", "Contact"]) {
       expect(screen.getByRole("heading", { level: 2, name: title })).toBeInTheDocument();
     }
     expect(
@@ -69,5 +69,12 @@ describe("HomePage", () => {
       "href",
       github!.href,
     );
+  });
+
+  it("홈에서 블로그 탭과 전체 글 목록으로 이동할 수 있다", () => {
+    render(<HomePage />);
+
+    expect(screen.getAllByRole("link", { name: "Blog" })[0]).toHaveAttribute("href", "/blog");
+    expect(screen.getByRole("link", { name: "블로그 글 모두 보기 →" })).toHaveAttribute("href", "/blog");
   });
 });

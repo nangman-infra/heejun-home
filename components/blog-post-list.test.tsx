@@ -53,4 +53,13 @@ describe("BlogPostList", () => {
       "https://velog.io/@heejun0911/posts",
     );
   });
+
+  it("홈에 표시할 글 수를 제한한다", async () => {
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, text: async () => rss }));
+
+    render(<BlogPostList limit={1} />);
+
+    expect(await screen.findByRole("link", { name: "최신 글" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "이전 글" })).not.toBeInTheDocument();
+  });
 });

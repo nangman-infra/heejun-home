@@ -1,10 +1,12 @@
+import Link from "next/link";
+
+import { BlogPostList } from "@/components/blog-post-list";
 import { ProjectCard } from "@/components/project-card";
 import { portfolioData } from "@/data/portfolio";
 
 export default function HomePage() {
   const { profile, projects, experience, contact } = portfolioData;
   const github = contact.find(({ label }) => label === "GitHub");
-  const blog = contact.find(({ label }) => label === "Blog");
 
   return (
     <main id="main-content">
@@ -25,11 +27,7 @@ export default function HomePage() {
               GitHub
             </a>
           )}
-          {blog && (
-            <a className="button button-secondary" href={blog.href} target="_blank" rel="noreferrer">
-              Blog
-            </a>
-          )}
+          <Link className="button button-secondary" href="/blog">Blog</Link>
         </div>
       </section>
 
@@ -57,6 +55,16 @@ export default function HomePage() {
               <ProjectCard key={project.slug} project={project} index={index} />
             ))}
           </div>
+        </section>
+
+        <section id="blog" className="section" aria-labelledby="blog-title">
+          <div className="section-heading">
+            <p className="section-label">Writing</p>
+            <h2 id="blog-title">Blog</h2>
+            <p>공부하고 직접 실습한 내용을 기록합니다.</p>
+          </div>
+          <BlogPostList limit={5} />
+          <Link className="blog-more" href="/blog">블로그 글 모두 보기 →</Link>
         </section>
 
         <section id="experience" className="section" aria-labelledby="experience-title">

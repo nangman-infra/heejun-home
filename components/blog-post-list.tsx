@@ -52,8 +52,9 @@ function readFeed(xml: string): BlogPost[] {
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 }
 
-export function BlogPostList() {
+export function BlogPostList({ limit }: { limit?: number } = {}) {
   const [feed, setFeed] = useState<FeedState>({ status: "loading" });
+  const PostHeading = limit === undefined ? "h2" : "h3";
 
   useEffect(() => {
     const controller = new AbortController();
@@ -98,14 +99,14 @@ export function BlogPostList() {
       {feed.status === "ready" && feed.posts.length > 0 && (
         <>
           <div className="blog-list">
-            {feed.posts.map((post) => (
+            {feed.posts.slice(0, limit).map((post) => (
               <article className="blog-post" key={post.url}>
                 <time dateTime={post.publishedAt}>
                   {Number.isNaN(Date.parse(post.publishedAt))
                     ? "Velog"
                     : new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "long", day: "numeric" }).format(new Date(post.publishedAt))}
                 </time>
-                <h2><a href={post.url} target="_blank" rel="noreferrer">{post.title}</a></h2>
+                <PostHeading><a href={post.url} target="_blank" rel="noreferrer">{post.title}</a></PostHeading>
                 {post.excerpt && <p>{post.excerpt}{post.excerpt.length === 180 ? "…" : ""}</p>}
               </article>
             ))}
