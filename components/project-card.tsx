@@ -22,15 +22,17 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       </div>
       <p className="project-focus">{project.focus}</p>
       <div className="project-links">
-        <a
-          className="text-link"
-          href={project.github}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={`${project.name} GitHub 새 창에서 열기`}
-        >
-          GitHub
-        </a>
+        {project.github && (
+          <a
+            className="text-link"
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`${project.name} GitHub 새 창에서 열기`}
+          >
+            GitHub
+          </a>
+        )}
         <Link
           className="text-link"
           href={`/projects/${project.slug}`}

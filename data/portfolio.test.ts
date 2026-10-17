@@ -9,19 +9,13 @@ describe("portfolioData", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it("모든 프로젝트가 7개 상세 항목을 채우고 있다", () => {
-    const detailKeys = [
-      "overview",
-      "problem",
-      "role",
-      "implementation",
-      "problemSolving",
-      "result",
-      "learned",
-    ];
-
+  it("프로젝트 상세에 임시 문구와 가짜 GitHub 주소가 없다", () => {
     for (const project of portfolioData.projects) {
-      expect(Object.keys(project.details).sort()).toEqual([...detailKeys].sort());
+      expect(project.details.overview).toBeTruthy();
+      for (const content of Object.values(project.details)) {
+        expect(content).not.toContain("입력해 주세요");
+      }
+      expect("github" in project ? project.github : undefined).not.toBe("https://github.com/username");
     }
   });
 

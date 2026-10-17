@@ -58,29 +58,13 @@ describe("ProjectPage", () => {
     }
   });
 
-  it("7개 상세 섹션을 모두 렌더한다", async () => {
+  it("내용이 확인된 상세 섹션만 렌더한다", async () => {
     render(await ProjectPage({ params: Promise.resolve({ slug: firstProject.slug }) }));
 
-    for (const title of [
-      "Overview",
-      "Problem",
-      "My Role",
-      "Implementation",
-      "Problem Solving",
-      "Result",
-      "What I Learned",
-    ]) {
+    for (const title of ["Overview", "Problem"]) {
       expect(screen.getByRole("heading", { level: 2, name: title })).toBeInTheDocument();
     }
-  });
-
-  it("플레이스홀더 문구에 placeholder 클래스를 부여한다", async () => {
-    render(await ProjectPage({ params: Promise.resolve({ slug: firstProject.slug }) }));
-
-    expect(screen.getByText(firstProject.details.overview)).not.toHaveClass(
-      "detail-placeholder",
-    );
-    expect(screen.getByText(firstProject.details.role)).toHaveClass("detail-placeholder");
+    expect(screen.queryByRole("heading", { name: "My Role" })).not.toBeInTheDocument();
   });
 
   it("존재하지 않는 slug는 notFound를 호출한다", async () => {

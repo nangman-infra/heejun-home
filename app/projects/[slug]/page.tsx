@@ -63,23 +63,23 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </span>
             ))}
           </div>
-          <div className="detail-links">
-            <a className="button button-secondary" href={project.github} target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-          </div>
+          {project.github && (
+            <div className="detail-links">
+              <a className="button button-secondary" href={project.github} target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+            </div>
+          )}
         </header>
         <div className="detail-content">
           {detailSections.map(({ key, title }) => {
             const content = project.details[key];
-            const isPlaceholder = content.includes("입력해 주세요");
-
-            return (
+            return content ? (
               <section className="detail-section" key={key}>
                 <h2>{title}</h2>
-                <p className={isPlaceholder ? "detail-placeholder" : undefined}>{content}</p>
+                <p>{content}</p>
               </section>
-            );
+            ) : null;
           })}
         </div>
       </article>

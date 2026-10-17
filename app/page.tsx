@@ -73,12 +73,11 @@ export default function HomePage() {
             <h2 id="experience-title">Experience</h2>
           </div>
           <div className="experience-list">
-            {experience.map(({ period, title, description }) => (
+            {experience.map(({ period, title }) => (
               <article className="experience-row" key={`${period}-${title}`}>
                 <span className="experience-period">{period}</span>
                 <div>
                   <strong>{title}</strong>
-                  <p>{description}</p>
                 </div>
               </article>
             ))}

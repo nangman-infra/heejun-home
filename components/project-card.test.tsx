@@ -59,4 +59,11 @@ describe("ProjectCard", () => {
       `/projects/${project.slug}`,
     );
   });
+
+  it("GitHub 주소가 없으면 링크를 표시하지 않는다", () => {
+    render(<ProjectCard project={{ ...project, github: undefined }} index={0} />);
+
+    expect(screen.queryByRole("link", { name: /GitHub/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /상세 보기/ })).toBeInTheDocument();
+  });
 });

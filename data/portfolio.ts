@@ -13,8 +13,8 @@ export interface Project {
   description: string;
   technologies: string[];
   focus: string;
-  github: string;
-  details: Record<ProjectDetailKey, string>;
+  github?: string;
+  details: Partial<Record<ProjectDetailKey, string>>;
 }
 
 export const portfolioData = {
@@ -51,11 +51,6 @@ export const portfolioData = {
       details: {
         overview: "지역화폐 가맹점 사업자가 안전하게 가입하고 서비스를 이용할 수 있도록 인증 흐름을 설계한 프로젝트입니다.",
         problem: "사업자 번호는 외부에 노출될 수 있어 번호 확인만으로는 실제 사업자 여부를 신뢰하기 어려웠습니다.",
-        role: "담당 범위와 기여 내용을 입력해 주세요.",
-        implementation: "인증 절차, API 구조, 데이터 모델 등 실제 구현 내용을 입력해 주세요.",
-        problemSolving: "본인 인증 과정에서 검토한 대안과 최종 방식의 선택 근거를 입력해 주세요.",
-        result: "검증 결과나 개선된 지표가 있다면 입력해 주세요.",
-        learned: "프로젝트를 통해 배운 점을 입력해 주세요.",
       },
     },
     {
@@ -64,15 +59,9 @@ export const portfolioData = {
       description: "실제 얼굴과 위조 얼굴을 판별하는 컴퓨터 비전 모델",
       technologies: ["Python", "PyTorch", "OpenCV", "EfficientNet"],
       focus: "약 20,000개의 이미지 데이터를 활용해 Real / Fake 얼굴을 분류하는 모델을 학습",
-      github: "https://github.com/username",
       details: {
         overview: "얼굴 이미지가 실제 촬영본인지 위조된 입력인지 분류하는 컴퓨터 비전 프로젝트입니다.",
         problem: "다양한 촬영 환경과 위조 방식에서도 실제 얼굴과 위조 얼굴을 안정적으로 구분해야 했습니다.",
-        role: "담당 범위와 기여 내용을 입력해 주세요.",
-        implementation: "데이터 전처리, 모델 학습, 평가 방식 등 실제 구현 내용을 입력해 주세요.",
-        problemSolving: "성능 개선 과정에서 세운 가설과 실험 내용을 입력해 주세요.",
-        result: "정확도, F1 Score 등 검증된 결과를 입력해 주세요.",
-        learned: "프로젝트를 통해 배운 점을 입력해 주세요.",
       },
     },
     {
@@ -81,15 +70,9 @@ export const portfolioData = {
       description: "Verilog 기반 디지털 알람 시계",
       technologies: ["Verilog", "Quartus", "FPGA"],
       focus: "24시간 시계, 시간 설정, 알람 설정, FND 및 LED 출력을 구현",
-      github: "https://github.com/username",
       details: {
         overview: "Verilog로 디지털 시계와 알람 기능을 설계하고 FPGA 보드에서 동작하도록 구현한 프로젝트입니다.",
         problem: "시계 동작과 사용자 설정, 알람 출력이 서로 충돌하지 않도록 상태와 신호를 설계해야 했습니다.",
-        role: "담당 범위와 기여 내용을 입력해 주세요.",
-        implementation: "모듈 구성, 클럭 분주, 입력 처리 등 실제 구현 내용을 입력해 주세요.",
-        problemSolving: "타이밍 또는 상태 전환 문제를 해결한 과정을 입력해 주세요.",
-        result: "보드 검증 결과와 구현 범위를 입력해 주세요.",
-        learned: "프로젝트를 통해 배운 점을 입력해 주세요.",
       },
     },
   ] satisfies Project[],
@@ -97,17 +80,10 @@ export const portfolioData = {
     {
       period: "2025.06 — 2025.08",
       title: "AI 모델 성능 개선 프로젝트",
-      description: "구체적인 역할과 성과를 입력해 주세요.",
     },
     {
       period: "2024.09 — 2024.12",
       title: "교내 캡스톤 프로젝트",
-      description: "구체적인 역할과 성과를 입력해 주세요.",
-    },
-    {
-      period: "기간 입력",
-      title: "Computer Engineering",
-      description: "학교명과 재학 기간 등 공개할 정보를 입력해 주세요.",
     },
   ],
   contact: [
@@ -122,5 +98,5 @@ export const portfolioData = {
   ],
 } as const;
 
-export const getProjectBySlug = (slug: string) =>
+export const getProjectBySlug = (slug: string): Project | undefined =>
   portfolioData.projects.find((project) => project.slug === slug);
