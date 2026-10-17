@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   // 정적 export에서는 Next 이미지 최적화 서버를 쓸 수 없다.
   images: {
     unoptimized: true,
+    remotePatterns: [{ protocol: "https", hostname: "velog.velcdn.com" }],
   },
   devIndicators: false,
   // 로컬 개발 서버에서도 운영 Nginx와 같은 경로로 RSS를 읽는다.

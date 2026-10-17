@@ -477,8 +477,31 @@ h3 {
 }
 
 .blog-post {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
   padding: 32px 0;
   border-bottom: 1px solid var(--border);
+}
+
+.blog-thumbnail {
+  flex: 0 0 200px;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.blog-thumbnail img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.blog-post-content {
+  min-width: 0;
 }
 
 .blog-post time {
@@ -551,6 +574,16 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  .blog-post {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .blog-thumbnail {
+    flex-basis: auto;
+    width: 100%;
+  }
+
   .container {
     width: min(var(--container), calc(100% - 32px));
   }

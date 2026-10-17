@@ -15,7 +15,7 @@ const rss = `<?xml version="1.0" encoding="utf-8"?>
     <title><![CDATA[최신 글]]></title>
     <link>https://velog.io/@heejun0911/newer</link>
     <pubDate>Tue, 22 Sep 2026 12:00:00 GMT</pubDate>
-    <description><![CDATA[<p>새 글 <strong>요약</strong></p>]]></description>
+    <description><![CDATA[<p>새 글 <strong>요약</strong></p><img src="https://velog.velcdn.com/images/heejun0911/post/cover.png" alt="본문 그림">]]></description>
   </item>
   <item>
     <title>다른 주소</title>
@@ -38,6 +38,15 @@ describe("BlogPostList", () => {
     expect(links.map((link) => link.textContent)).toEqual(["최신 글", "이전 글"]);
     expect(links[0]).toHaveAttribute("href", "https://velog.io/@heejun0911/newer");
     expect(screen.getByText("새 글 요약")).toBeInTheDocument();
+    const thumbnailLink = screen.getByRole("link", { name: "최신 글 이미지로 원문 열기" });
+    expect(thumbnailLink.querySelector("img")).toHaveAttribute(
+      "src",
+      "https://velog.velcdn.com/images/heejun0911/post/cover.png",
+    );
+    expect(thumbnailLink).toHaveAttribute(
+      "href",
+      "https://velog.io/@heejun0911/newer",
+    );
     expect(screen.queryByText("다른 주소")).not.toBeInTheDocument();
     expect(fetchMock).toHaveBeenCalledWith("/velog/rss", expect.objectContaining({ cache: "no-store" }));
   });
@@ -61,5 +70,18 @@ describe("BlogPostList", () => {
 
     expect(await screen.findByRole("link", { name: "최신 글" })).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "이전 글" })).not.toBeInTheDocument();
+  });
+
+  it("외부 이미지 주소는 썸네일로 사용하지 않는다", async () => {
+    const untrustedRss = rss.replace(
+      "https://velog.velcdn.com/images/heejun0911/post/cover.png",
+      "https://example.com/cover.png",
+    );
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({ ok: true, text: async () => untrustedRss }));
+
+    render(<BlogPostList />);
+
+    expect(await screen.findByRole("link", { name: "최신 글" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /이미지로 원문 열기/ })).not.toBeInTheDocument();
   });
 });

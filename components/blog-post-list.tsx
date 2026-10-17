@@ -1,14 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const BLOG_URL = "https://velog.io/@heejun0911/posts";
+const EXCERPT_LENGTH = 180;
 
 type BlogPost = {
   title: string;
   url: string;
   publishedAt: string;
   excerpt: string;
+  thumbnailUrl: string | undefined;
 };
 
 type FeedState =
@@ -29,11 +32,23 @@ function readFeed(xml: string): BlogPost[] {
       const rawUrl = item.querySelector("link")?.textContent?.trim() ?? "";
       const publishedAt = item.querySelector("pubDate")?.textContent?.trim() ?? "";
       const html = item.querySelector("description")?.textContent ?? "";
-      const excerpt = new DOMParser()
-        .parseFromString(html, "text/html")
-        .body.textContent?.replace(/\s+/g, " ")
+      const description = new DOMParser().parseFromString(html, "text/html");
+      const excerpt = description.body.textContent?.replace(/\s+/g, " ")
         .trim()
-        .slice(0, 180) ?? "";
+        .slice(0, EXCERPT_LENGTH) ?? "";
+
+      const imageSource = description.querySelector("img")?.getAttribute("src");
+      let thumbnailUrl: string | undefined;
+      if (imageSource) {
+        try {
+          const imageUrl = new URL(imageSource);
+          if (imageUrl.protocol === "https:" && imageUrl.hostname === "velog.velcdn.com") {
+            thumbnailUrl = imageUrl.href;
+          }
+        } catch {
+          // 잘못된 이미지 주소는 썸네일 없이 표시한다.
+        }
+      }
 
       let url: URL;
       try {
@@ -46,7 +61,7 @@ function readFeed(xml: string): BlogPost[] {
         return null;
       }
 
-      return { title, url: url.href, publishedAt, excerpt };
+      return { title, url: url.href, publishedAt, excerpt, thumbnailUrl };
     })
     .filter((post): post is BlogPost => post !== null)
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
@@ -101,13 +116,20 @@ export function BlogPostList({ limit }: { limit?: number } = {}) {
           <div className="blog-list">
             {feed.posts.slice(0, limit).map((post) => (
               <article className="blog-post" key={post.url}>
-                <time dateTime={post.publishedAt}>
-                  {Number.isNaN(Date.parse(post.publishedAt))
-                    ? "Velog"
-                    : new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "long", day: "numeric" }).format(new Date(post.publishedAt))}
-                </time>
-                <PostHeading><a href={post.url} target="_blank" rel="noreferrer">{post.title}</a></PostHeading>
-                {post.excerpt && <p>{post.excerpt}{post.excerpt.length === 180 ? "…" : ""}</p>}
+                {post.thumbnailUrl && (
+                  <a className="blog-thumbnail" href={post.url} target="_blank" rel="noreferrer" aria-label={`${post.title} 이미지로 원문 열기`}>
+                    <Image src={post.thumbnailUrl} alt="" width={240} height={135} unoptimized />
+                  </a>
+                )}
+                <div className="blog-post-content">
+                  <time dateTime={post.publishedAt}>
+                    {Number.isNaN(Date.parse(post.publishedAt))
+                      ? "Velog"
+                      : new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "long", day: "numeric" }).format(new Date(post.publishedAt))}
+                  </time>
+                  <PostHeading><a href={post.url} target="_blank" rel="noreferrer">{post.title}</a></PostHeading>
+                  {post.excerpt && <p>{post.excerpt}{post.excerpt.length === EXCERPT_LENGTH ? "…" : ""}</p>}
+                </div>
               </article>
             ))}
           </div>
