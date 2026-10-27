@@ -3,6 +3,17 @@ import { describe, expect, it } from "vitest";
 import { getProjectBySlug, portfolioData } from "@/data/portfolio";
 
 describe("portfolioData", () => {
+  it("CloudSaver를 표시하고 제거한 프로젝트는 목록에서 제외한다", () => {
+    const slugs = portfolioData.projects.map(({ slug }) => slug);
+    const cloudSaver = getProjectBySlug("cloudsaver");
+
+    expect(slugs).toContain("cloudsaver");
+    expect(slugs).not.toContain("anti-spoofing");
+    expect(slugs).not.toContain("fpga-alarm-clock");
+    expect(cloudSaver?.github).toBe("https://github.com/Zenjun/CloudSaver");
+    expect(cloudSaver?.details.overview).toBeTruthy();
+  });
+
   it("프로젝트 slug가 중복되지 않는다", () => {
     const slugs = portfolioData.projects.map(({ slug }) => slug);
 
